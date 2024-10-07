@@ -1,0 +1,108 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+  height: 100vh;
+  /* background-color: black; */
+  background-image: url("back (1).jpg");
+  /* background-image: linear-gradient(rgba(192,192,192,0.9),rgba(192,192,192,0.9)), url("C:\Users\ACER\Desktop\sstc\image9-2.png") ; */
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+.form-box {
+    /* background-color: red; */
+    height: 70%;
+    width: 65%;
+    max-width: 400px;
+    max-height: 500px; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 60px 50px 50px;
+    border-radius: 25px;
+    background:rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 11px );
+    -webkit-backdrop-filter: blur( 11px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.form-box h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: firebrick;
+    margin-bottom: 40px;
+}
+
+.input-field{
+    background: #eaeaea;
+    margin: 15px 0;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    background: transparent;
+}
+
+input{
+    margin-top: 10px;
+    width: 100%;
+    background: white;
+    border: 1;
+    outline: 0;
+    padding: 18px 15px;
+    border: 1px solid firebrick;
+    border-radius: 25px;
+}
+
+.submit-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+.submit-btn button {
+    /* background: transparent;
+    color: #eaeaea;
+    border: 0;
+    padding: 0 20px 0;
+    margin-top: 20px;
+    background-color: black; */
+    width: 100%;
+    font-size: 15px;
+    /* flex-basis: 48%; */
+    background: firebrick;
+    color: white;
+    height: 50px;
+    border-radius: 25px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: background 1s;
+    
+}
+
+p {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .form-box {
+        padding: 50px 30px 50px;
+        max-width: 380px;
+        width: 90%;
+        max-height: 425px;
+    }
+}

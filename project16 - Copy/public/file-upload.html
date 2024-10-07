@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="notes.css">
+  <script src="sidebar.js"></script>
+  <script src="file.js"></script>
+</head>
+<body>
+  <header class="header">
+    <span><button class="btn" onclick="openfn()">☰</button></span>
+    <span><h3 class="h3">SSTC</h3></span>
+</header>
+<aside class="sidebar" id="sidebar">
+  <div class="close">
+      <button class="close-btn" id="close" onclick="closefn()">
+          Close
+      </button>
+  </div>
+  <ul class="sidebar-links">
+      <h4>
+        <span class="span">Main menu</span>
+        <!-- <div class="menu-seperator"></div> -->
+      </h4>
+      <li>
+        <a href="file-upload.html"><span class="material-symbols-outlined">
+          note
+          </span>
+          Notes
+        </a>
+      <!-- </li>
+       <li>
+        <a href="labs.html"><span class="material-symbols-outlined">
+          labs
+          </span>
+          Labs
+        </a>
+      </li> -->
+       <!-- <li>
+        <a href="virtuallab.html"><span class="material-symbols-outlined">
+          lab_profile
+          </span>
+          Virtual Labs
+        </a>
+      </li> -->
+      <!-- <li>
+        <a href="#"><span class="material-symbols-outlined">
+          checklist
+          </span>
+          Forms
+        </a>
+      </li> -->
+      <h4>
+        <span class="span">General</span>
+        <div class="menu-seperator"></div>
+      </h4>
+       <li>
+        <a href="#" onclick="goToNotices()"><span class="material-symbols-outlined">
+          notifications
+          </span>
+          Announcements
+        </a>
+      </li>
+      <h4>
+        <span class="span">Account</span>
+        <div class="menu-seperator"></div>
+      </h4>
+       <li>
+        <a href="#" onclick="goToDetails()"><span class="material-symbols-outlined">
+          account_circle
+          </span>
+          Profile
+        </a>
+      </li>
+      <li>
+          <a href="#" onclick="logout()"><span class="material-symbols-outlined">
+            logout
+            </span>
+            Log out
+          </a>
+        </li>
+    </ul>
+
+</aside>
+<div class="container">
+  <h3 class="notes-head">Notes</h3>
+  <div class="subject" id="subject"> 
+      <div class="sub1" id="sub">
+          <div class="sub" id="div-sub">
+          <span><h3>Data Structure</h3>
+          <button id="show" class="myButton">+</button>
+          <!-- <button id="hide" class="myButton">-</button> -->
+          </span></div>
+          <ul class="list" id="fileList">
+              <!-- <a href="#"><li>Module - 1</li></a><div class="container"></div>
+              <a href="#"><li>Module - 2</li></a>
+              <a href="#"><li>Module - 3</li></a>
+              <a href="#"><li>Module - 4</li></a>
+              <a href="#"><li>Module - 5</li></a> -->
+          </ul>
+      </div>
+      </div>
+
+      <div class="upload-box" id="upload-box" style="display: none;">
+  <h1 >Upload a PDF File</h1>
+  <form action="/file/uploadfile" method="POST" enctype="multipart/form-data" id="uploadForm">
+    <label for="fileInput" class="custom-file-upload">
+      <span class="material-symbols-outlined">
+        upload
+        </span>Select file to upload
+  </label>
+    <input type="file" name="pdf" accept=".pdf" class="file" id="fileInput">
+  </form>
+</div>
+
+<!-- <form id="uploadForm" action="http://127.0.0.1:3000/upload" method="POST" enctype="multipart/form-data">
+  <input type="file" id="fileInput" name="pdf" accept="application/pdf" />
+</form> -->
+  <!-- <h1>Uploaded Files</h1> -->
+    
+  <!-- Display a list of uploaded files -->
+  <!-- <ul id="fileList"></ul> -->
+</div>
+
+  <!-- JavaScript to populate the list of files and handle delete and download actions -->
+  <!-- <script src="sidebar.js">
+    document.addEventListener('DOMContentLoaded', function() {
+          fetch('/auth/user-role')
+            .then(response => response.json())
+            .then(data => {
+              if (data.role === 'admin') {
+                document.getElementById('upload-box').style.display = 'block';
+                // downloadButton.style.display = 'none';
+                // deleteButton.style.display = 'none';
+              }
+              
+             
+            });
+        });
+  </script> -->
+  <script>
+      const FileInput = document.getElementById('fileInput');
+
+FileInput.addEventListener('change', async () => {
+    // Automatically submit the form when a file is selected
+    const formData = new FormData(document.getElementById('uploadForm'));
+
+    try {
+        const response = await fetch('/file/uploadfile', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const data = await response.json(); // Assuming the server sends a JSON response
+            alert(data.message); // Show alert with success message
+            fileInput.value = ''; // Clear the file input after upload
+        } 
+        else {
+             alert('File upload failed.'); // Alert for failed uploads
+         }
+    } 
+    catch (error) {
+        console.error('Error:', error);
+        alert('File uploaded.'); // Alert for errors
+    }
+});
+
+const parentDivs = document.getElementsByClassName('myButton');
+
+// Loop through each button
+Array.from(parentDivs).forEach(button => {
+button.addEventListener('click', function(event) {
+    const clickedChild = event.target;
+    const parent = clickedChild.parentElement;
+    const parent2 = parent.parentElement;
+    const sib = parent2.nextElementSibling; // Get the sibling div
+
+    // Check if the sibling exists
+    if (sib) {
+        // Toggle display between 'block' and 'none'
+        if (sib.style.display === 'none' || sib.style.display === '') {
+            clickedChild.textContent="-";
+            sib.style.display = 'block'; // Show the sibling
+                
+        } else {
+            sib.style.display = 'none'; // Hide the sibling
+            clickedChild.textContent="+";
+        }
+    }
+});
+});
+  </script>
+</body>
+</html>

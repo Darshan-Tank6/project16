@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="sidebar.css">
+  <!-- <link rel="stylesheet" href="notes.css"> -->
+  <link rel="stylesheet" href="user-details.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <script src="sidebar.js"></script>
+  <!-- <script src="file.js"></script> -->
+  
+  <title>User Details</title>
+</head>
+<body>
+  <header class="header">
+    <span><button class="btn" onclick="openfn()">☰</button></span>
+    <span><h3 class="h3" id="h3-mob" style="display: block;">SSTC</h3></span>
+    <span><h3 class="h3" id="h3-desk" style="display: none;">Somaiya Student Teachers Connect</h3></span>
+</header>
+<aside class="sidebar" id="sidebar">
+  <div class="close">
+      <button class="close-btn" id="close" onclick="closefn()">
+          Close
+      </button>
+  </div>
+  <ul class="sidebar-links">
+      <h4>
+        <span class="span">Main menu</span>
+        <!-- <div class="menu-seperator"></div> -->
+      </h4>
+      <li>
+        <a href="file-upload.html"><span class="material-symbols-outlined">
+          note
+          </span>
+          Notes
+        </a>
+      <!-- </li>
+       <li>
+        <a href="labs.html"><span class="material-symbols-outlined">
+          labs
+          </span>
+          Labs
+        </a>
+      </li> -->
+       <!-- <li>
+        <a href="virtuallab.html"><span class="material-symbols-outlined">
+          lab_profile
+          </span>
+          Virtual Labs
+        </a>
+      </li> -->
+      <!-- <li>
+        <a href="#"><span class="material-symbols-outlined">
+          checklist
+          </span>
+          Forms
+        </a>
+      </li> -->
+      <h4>
+        <span class="span">General</span>
+        <div class="menu-seperator"></div>
+      </h4>
+       <li>
+        <a href="#" onclick="goToNotices()"><span class="material-symbols-outlined">
+          notifications
+          </span>
+          Announcements
+        </a>
+      </li>
+      <h4>
+        <span class="span">Account</span>
+        <div class="menu-seperator"></div>
+      </h4>
+       <li>
+        <a href="#" onclick="goToDetails()"><span class="material-symbols-outlined">
+          account_circle
+          </span>
+          Profile
+        </a>
+      </li>
+      <li>
+          <a href="#" onclick="logout()"><span class="material-symbols-outlined">
+            logout
+            </span>
+            Log out
+          </a>
+        </li>
+    </ul>
+
+</aside>
+<div class="container">
+  <h1>Your Details</h1>
+  <div id="userDetails">
+    <p id="name"></p>
+    <p id="department"></p>
+    <p id="division"></p>
+    <p id="class"></p>
+    <p id="mobileNumber"></p>
+    <p id="email"></p>
+    <p id="role"></p>
+ 
+  <!-- <button onclick="logout()">Logout</button>
+  <button onclick="goToNotices()">Go to Notices</button>
+  <button onclick="goTofiles()">Go to files</button> -->
+
+</div>
+</div>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+      fetch('/auth/user-details')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('name').innerText = `Name : ${data.name}`;
+          document.getElementById('department').innerText = `Department : ${data.department}`;
+          document.getElementById('division').innerText = `Division : ${data.division}`;
+          document.getElementById('class').innerText = `Class : ${data.class}`;
+          document.getElementById('mobileNumber').innerText = `Mobile Number : ${data.mobileNumber}`;
+          document.getElementById('email').innerText = `Email : ${data.email}`;
+          document.getElementById('role').innerText = `Role : ${data.role}`;
+        });
+    });
+  
+  function logout() {
+          fetch('/auth/logout')
+            .then(() => {
+              window.location.href = '/login';
+            });
+        }
+    
+        function goToNotices() {
+          window.location.href = '/dashboard';
+        }
+
+        function goToDetails() {
+          window.location.href = '/user-details';
+        }
+
+        function goTofiles() {
+          window.location.href = '/file-upload';
+        }
+</script>
+</body>
+</html>

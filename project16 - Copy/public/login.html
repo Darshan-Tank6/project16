@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="login.css">
+  
+  <title>Login</title>
+</head>
+<body>
+    
+  <!-- <h1>Login</h1> -->
+  <form action="/auth/login" method="post" class="form-box">
+    <div class="h3">
+        <h3>Log in</h3>
+    </div>
+    <!-- <label for="email">Email:</label> -->
+    <input type="email" id="email" name="email" required placeholder="Email">
+
+    <!-- <label for="password">Password:</label> -->
+    <input type="password" id="password" name="password" required placeholder="password">
+    <p>Dont have account <a href="#" onclick="goToRegister()">Register</a></p>
+    <div class="submit-btn">
+    <button type="submit" class="login">Login</button></div>
+  </form>
+  <script>
+    function goToRegister() {
+        window.location.href = '/register';
+    }
+  </script>
+</body>
+</html>

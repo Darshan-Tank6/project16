@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- <link rel="stylesheet" href="notes.css"> -->
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="announcements.css">
+  <script src="sidebar.js"></script>
+
+  
+  <title>notices</title>
+</head>
+<body>
+  <header class="header">
+    <span><button class="btn" onclick="openfn()">☰</button></span>
+    <span><h3 class="h3" id="h3-mob" style="display: block;">SSTC</h3></span>
+    <span><h3 class="h3" id="h3-desk" style="display: none;">Somaiya Student Teachers Connect</h3></span>
+</header>
+<aside class="sidebar" id="sidebar">
+  <div class="close">
+      <button class="close-btn" id="close" onclick="closefn()">
+          Close
+      </button>
+  </div>
+  <ul class="sidebar-links">
+      <h4>
+        <span class="span">Main menu</span>
+        <!-- <div class="menu-seperator"></div> -->
+      </h4>
+      <li>
+        <a href="file-upload.html"><span class="material-symbols-outlined">
+          note
+          </span>
+          Notes
+        </a>
+      <!-- </li>
+       <li>
+        <a href="labs.html"><span class="material-symbols-outlined">
+          labs
+          </span>
+          Labs
+        </a>
+      </li> -->
+       <!-- <li>
+        <a href="virtuallab.html"><span class="material-symbols-outlined">
+          lab_profile
+          </span>
+          Virtual Labs
+        </a>
+      </li> -->
+      <!-- <li>
+        <a href="#"><span class="material-symbols-outlined">
+          checklist
+          </span>
+          Forms
+        </a>
+      </li> -->
+      <h4>
+        <span class="span">General</span>
+        <div class="menu-seperator"></div>
+      </h4>
+       <li>
+        <a href="#" onclick="goToNotices()"><span class="material-symbols-outlined">
+          notifications
+          </span>
+          Announcements
+        </a>
+      </li>
+      <h4>
+        <span class="span">Account</span>
+        <div class="menu-seperator"></div>
+      </h4>
+       <li>
+        <a href="#" onclick="goToDetails()"><span class="material-symbols-outlined">
+          account_circle
+          </span>
+          Profile
+        </a>
+      </li>
+      <li>
+          <a href="#" onclick="logout()"><span class="material-symbols-outlined">
+            logout
+            </span>
+            Log out
+          </a>
+        </li>
+    </ul>
+
+</aside>
+<div class="container" id="notices1">
+  <h2>Available Announcements</h2>
+  <div id="notices"></div>
+  <div id="adminActions" style="display: none;" >
+    <h1>Create Announcement</h1>
+    <form id="noticeForm" action="/notices/add" method="post">
+      <label for="title">Title :</label>
+      <input type="text" id="title" name="title" required>
+      
+      <label for="content">Content :</label>
+      <textarea id="content" name="content" required></textarea>
+      <div id="addBtn">
+      <button type="submit" class="e-d-btn" id="addBtn">Add Announcement</button></div>
+    </form>
+  </div>
+
+  
+</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('/auth/user-role')
+        .then(response => response.json())
+        .then(data => {
+          if (data.role === 'admin') {
+            document.getElementById('adminActions').style.display = 'block';
+          }
+          loadNotices(data.role);
+        });
+    });
+
+    function loadNotices(role) {
+      fetch('/notices/view')
+        .then(response => response.json())
+        .then(data => {
+          const noticesContainer = document.getElementById('notices');
+          data.forEach(notice => {
+            const noticeElement = document.createElement('div');
+            noticeElement.innerHTML = `
+              <h3>${notice.title}</h3>
+              <p>${notice.content}</p>
+            `
+            noticeElement.style.border="1px solid #ccc";
+            noticeElement.style.borderRadius = "20px";
+            noticeElement.style.padding="20px 20px 20px";
+            noticeElement.style.marginTop="10px";
+            
+            
+
+            if (role === 'admin') {
+              noticeElement.innerHTML += `
+              
+                <button onclick="deleteNotice('${notice._id}')" id="deletebutton" class="e-d-btn">Delete</button>
+                <button onclick="editNotice('${notice._id}', '${notice.title}', '${notice.content}')" id="editbutton" class="e-d-btn">Edit</button>\
+                
+              `;
+            }
+
+            noticesContainer.appendChild(noticeElement);
+          });
+        });
+    }
+
+    function deleteNotice(id) {
+      fetch(`/notices/delete/${id}`, {
+        method: 'DELETE'
+      }).then(() => {
+        location.reload();
+      });
+    }
+
+    function editNotice(id, title, content) {
+      const newTitle = prompt("Edit Title:", title);
+      const newContent = prompt("Edit Content:", content);
+      if (newTitle && newContent) {
+        fetch(`/notices/edit/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: newTitle, content: newContent })
+        }).then(() => {
+          location.reload();
+        });
+      }
+    }
+  </script>
+</body>
+</html>

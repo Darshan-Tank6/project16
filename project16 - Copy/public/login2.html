@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>login form</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+<body>
+<div class="container">
+<form class="form-box" action="/auth/login" method="post">
+    <div class="h3">
+        <h3>Log in</h3>
+    </div>
+    <!-- <div class="role-btn">
+        <button class="role" id="role-student" onclick="student()">Student</button>
+        <button class="role" id="role-teacher" onclick="teacher()">Teacher</button>
+    </div> -->
+    <div class="input-field">
+        <input type="email" placeholder="Email">
+    </div>
+    <div class="input-field">
+        <input type="password" placeholder="Password">
+    </div>
+    <div class="submit-btn">
+        <button class="login">Log in</button>
+    </div>
+    <!-- <p>----- OR -----</p>
+    <div class="submit-btn">
+        <button class="google">Login using Google</button>
+    </div> -->
+</form>
+</div>
+<script>
+    function student () {
+        document.getElementById("role-student").style.color="firebrick";
+        document.getElementById("role-teacher").style.color="grey";
+    }
+    function teacher () {
+        document.getElementById("role-teacher").style.color="firebrick";
+        document.getElementById("role-student").style.color="grey";
+    }
+</script>
+
+
+</body>
+</html>
